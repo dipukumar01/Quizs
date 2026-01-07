@@ -37,7 +37,7 @@ let questions = [
 ];
 
 
-// consistents
+// constants
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 3;
 
@@ -55,6 +55,7 @@ getNewQuestion = () => {
         return window.location.assign("/end.html");
     }
     questionCounter++;
+    questionCounterText.innerText = `${questionCounter}/${MAX_QUESTIONS}`;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currenntQuestion = availableQuestions[questionIndex];
     question.innerText = currenntQuestion.question;
@@ -79,6 +80,10 @@ choice.forEach( choice => {
         const classToApply =
             selectedAnswer == currenntQuestion.answer ? "correct" : "incorrect"
         
+        if(classToApply === "correct"){
+            incrementScore(CORRECT_BONUS);
+        }
+        
         selectedChoice.parentElement.classList.add(classToApply);
 
         setTimeout( () => {
@@ -87,5 +92,10 @@ choice.forEach( choice => {
         }, 1000);
     });
 });
+
+incrementScore = num => {
+    score += num;
+    scoreText.innerText = score;
+}
 
 startGame();
